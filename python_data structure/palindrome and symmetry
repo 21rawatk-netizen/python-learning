@@ -1,0 +1,13 @@
+def check_palindrome(s):
+    return s==s[::-1]
+    print(s)
+def check_symmetry(s):
+    half=len(s)//2
+    return s[:half]==s[half:]
+    if len(s)%2==0:
+        return a=s[:mid]==s[mid:][::-1]
+        print(a)
+    else:
+        return b= s[:mid]==s[mid+1:][::-1]
+        print(b)
+s=input("enter the string")
