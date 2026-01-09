@@ -1,0 +1,57 @@
+import numpy as np
+import pandas as pd
+df= pd.read_csv("spam.csv",encoding="latin")
+df.sample(5)
+df.shape
+# 1. Data Cleaning
+# 2. EDA
+# 3. Text preprocessing
+# 4. Model building
+# 5. Evaluation
+# 6. Improvements
+# 7. website 
+# 8. Deploy
+## Data Cleaning
+df.info()
+df= df.iloc[:, :2].copy()
+df.sample(5)
+#renaming the columns
+df.rename(columns={'v1':'target','v2':'text'},)
+df.sample(5)
+from sklearn.preprocessing import LabelEncoder
+encoder= LabelEncoder()
+df['target'] = encoder.fit_transform(df['target'])
+df.head()
+# missing values
+df.isnull().sum()
+#check for duplicate values
+df.duplicated().sum()
+#remove duplicates
+df= df.drop_duplicates(keep='first')
+df.duplicated().sum()
+df.shape
+## EDA
+df.head()
+df['target'].value_counts()
+import matplotlib.pyplot as plt
+plt.pie(df['target'].value_counts(),labels=['ham','spam'],autopct="%0.2f")
+plt.show()
+import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
+df['num_characters']= df['text']. apply(len)
+df.head()
+import nltk
+nltk.download('punkt_tab')
+#num of words ke tokens
+df['text'].apply(lambda x:nltk.word_tokenize(x))
+# find the length meaning number of tokens in messages and then store in variable num words and make it a new column
+df['num_words']= df['text'].apply(lambda x:len(nltk.word_tokenize(x)))
+df.head()
+# sent tokenize make the tokens based on sentences
+df['text'].apply(lambda x:nltk.sent_tokenize(x))
+# find the length meaning number of sentence tokens in messages and then store in variable num sentences and make it a new column
+df['num_sentences']=df['text'].apply(lambda x:len(nltk.sent_tokenize(x)))
+df.head()
+# description of words ,sentences and words
+df[['num_characters','num_words','num_sentences']].describe()
