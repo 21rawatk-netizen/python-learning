@@ -1,0 +1,7 @@
+# Caesar cipher
+Its is the simplest and oldest encryption Techniques 
+Here each letter in the meassage is shifted by a fixed number of positions in the alphabet
+## Steps of this program
+- First is the shift count that should be integer
+- Second it contain alphabet in a varible
+- Third
