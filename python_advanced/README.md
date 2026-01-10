@@ -5,13 +5,13 @@
 - Matplotlib
 - Seaborn
 # More advanced topics
-Memoray management
-Multithreading
-Multiprocessing
-Asynchronus programming
-Network(SocketProgramming)
-Web Scraping
-Automation
-Logging
-Unit testing
+Memoray management,
+Multithreading,
+Multiprocessing,
+Asynchronus programming,
+Network(SocketProgramming),
+Web Scraping,
+Automation,
+Logging,
+Unit testing,
 
