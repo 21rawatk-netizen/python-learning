@@ -47,3 +47,48 @@ print(a[:8])
 print(a[-5:-2])
 print(a[::2])
 print(a[::-1])# string reverseing
+
+#String analyzer tool
+name="kiran rawat"
+number_of_characters=len(name)
+print(number_of_characters)
+vowels=0
+consonants=0
+special_characters=0
+for ch in name:
+    if( ch.lower() in "aeiou" ):
+       vowels+=1
+    elif(ch.isalpha()):
+        consonants+=1
+    else:
+        special_characters+=1
+print("vowels",vowels)
+
+# Simple Chatbot Using String Matching
+
+print("Chatbot: Hello! Type 'bye' to exit.")
+
+while True:
+    user_input = input("You: ").lower()
+
+    if "hello" in user_input or "hi" in user_input:
+        print("Chatbot: Hello! How can I help you?")
+    
+    elif "how are you" in user_input:
+        print("Chatbot: I'm fine, thank you! How about you?")
+    
+    elif "your name" in user_input:
+        print("Chatbot: I am a simple Python chatbot.")
+    
+    elif "help" in user_input:
+        print("Chatbot: I can answer basic questions like greetings, name, and time.")
+    
+    elif "bye" in user_input or "exit" in user_input:
+        print("Chatbot: Goodbye! Have a nice day ")
+        break
+    
+    else:
+        print("Chatbot: Sorry, I didn't understand that.")
+
+    
+
