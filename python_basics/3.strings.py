@@ -27,6 +27,7 @@ print(a.lower())# all character in lower case
 print(a.strip("k"))# removing specified argument
 print(a.strip())# without arguments used for removing leading and trailing whitepc3
 print(a.replace("k","h"))# replacing one chracter with another
+print(a.title())# first letter of each word is capital
 print(a.split("r"))# coverting string into list based on specid character
 print(a.split())#string into list without argument based in available 
 index = a.find("w")
@@ -38,7 +39,7 @@ print(a.startswith("s")) # check if the word starts with specified character
 print(a.endswith("t")) 
 # formal strings used to combine the numbers and string using the f strings
 age =36
-text="My name is kiran and i am {age} years old"
+text=f"My name is kiran and i am {age} years old"
 print(text)
 # String slicing
 print(a[2:8])
@@ -63,6 +64,8 @@ for ch in name:
     else:
         special_characters+=1
 print("vowels",vowels)
+print("consonants",consonants)
+print("special_characters",special_characters)
 
 # Simple Chatbot Using String Matching
 
@@ -90,5 +93,26 @@ while True:
     else:
         print("Chatbot: Sorry, I didn't understand that.")
 
-    
+#Check if two strings anagrams
+s1="listen"
+s2="silent"
+if sorted(s1)==sorted(s2):
+    print("Anagrams")
+else:
+    print("Not Anagrams")
+#Program 2 for anagrams
+def is_anagrams(a,b):
+    a=a.replace("","").lower()
+    b=b.replace("","").lower()
+    return sorted(a)==sorted(b)
+print(is_anagrams("Dormitory","Dirty room"))
+# Reverse words in a sentence
+s="I love Python"
+words=s.split()
+print("".join(words[::-1]))
 
+#palindrome checker
+def is_palindrome(s):
+    s=s.replace("","").lower()
+    return s==s[::-1]
+print(is_palindrome("A man a plan a canal Panama"))
