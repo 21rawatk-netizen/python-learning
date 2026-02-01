@@ -1,0 +1,106 @@
+# Library Management System in Python
+# Long and easy program for beginners and GitHub commits
+
+library = []
+
+def add_book():
+    book_id = input("Enter book ID: ")
+    title = input("Enter book title: ")
+    author = input("Enter author name: ")
+    quantity = int(input("Enter quantity: "))
+
+    book = {
+        "book_id": book_id,
+        "title": title,
+        "author": author,
+        "quantity": quantity
+    }
+
+    library.append(book)
+    print("Book added successfully.\n")
+
+def display_books():
+    if not library:
+        print("No books available in library.\n")
+        return
+
+    print("\n--- Library Books ---")
+    for b in library:
+        print("Book ID :", b["book_id"])
+        print("Title   :", b["title"])
+        print("Author  :", b["author"])
+        print("Quantity:", b["quantity"])
+        print("---------------------")
+    print()
+
+def search_book():
+    book_id = input("Enter book ID to search: ")
+    for b in library:
+        if b["book_id"] == book_id:
+            print("\nBook Found")
+            print("Title  :", b["title"])
+            print("Author :", b["author"])
+            print("Quantity:", b["quantity"], "\n")
+            return
+    print("Book not found.\n")
+
+def issue_book():
+    book_id = input("Enter book ID to issue: ")
+    for b in library:
+        if b["book_id"] == book_id:
+            if b["quantity"] > 0:
+                b["quantity"] -= 1
+                print("Book issued successfully.\n")
+            else:
+                print("Book not available.\n")
+            return
+    print("Book not found.\n")
+
+def return_book():
+    book_id = input("Enter book ID to return: ")
+    for b in library:
+        if b["book_id"] == book_id:
+            b["quantity"] += 1
+            print("Book returned successfully.\n")
+            return
+    print("Book not found.\n")
+
+def delete_book():
+    book_id = input("Enter book ID to delete: ")
+    for b in library:
+        if b["book_id"] == book_id:
+            library.remove(b)
+            print("Book deleted successfully.\n")
+            return
+    print("Book not found.\n")
+
+# Main Menu
+while True:
+    print("===== LIBRARY MANAGEMENT SYSTEM =====")
+    print("1. Add Book")
+    print("2. Display Books")
+    print("3. Search Book")
+    print("4. Issue Book")
+    print("5. Return Book")
+    print("6. Delete Book")
+    print("7. Exit")
+
+    choice = input("Enter your choice (1-7): ")
+
+    if choice == "1":
+        add_book()
+    elif choice == "2":
+        display_books()
+    elif choice == "3":
+        search_book()
+    elif choice == "4":
+        issue_book()
+    elif choice == "5":
+        return_book()
+    elif choice == "6":
+        delete_book()
+    elif choice == "7":
+        print("Library system closed.")
+        break
+    else:
+        print("Invalid choice. Please try again.\n")
