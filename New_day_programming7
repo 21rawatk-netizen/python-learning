@@ -1,0 +1,82 @@
+# ATM Banking System in Python
+# Long and easy program for beginners and GitHub commits
+
+balance = 10000
+transaction_history = []
+
+def check_balance():
+    print("\nYour current balance is: ₹", balance)
+    print()
+
+def deposit_money():
+    global balance
+    amount = int(input("Enter amount to deposit: ₹"))
+    if amount > 0:
+        balance += amount
+        transaction_history.append(f"Deposited ₹{amount}")
+        print("Amount deposited successfully.\n")
+    else:
+        print("Invalid amount.\n")
+
+def withdraw_money():
+    global balance
+    amount = int(input("Enter amount to withdraw: ₹"))
+    if amount <= 0:
+        print("Invalid amount.\n")
+    elif amount > balance:
+        print("Insufficient balance.\n")
+    else:
+        balance -= amount
+        transaction_history.append(f"Withdrawn ₹{amount}")
+        print("Please collect your cash.\n")
+
+def transfer_money():
+    global balance
+    account = input("Enter receiver account number: ")
+    amount = int(input("Enter amount to transfer: ₹"))
+
+    if amount <= 0:
+        print("Invalid amount.\n")
+    elif amount > balance:
+        print("Insufficient balance.\n")
+    else:
+        balance -= amount
+        transaction_history.append(f"Transferred ₹{amount} to account {account}")
+        print("Money transferred successfully.\n")
+
+def transaction_history_menu():
+    if not transaction_history:
+        print("\nNo transactions available.\n")
+    else:
+        print("\n--- Transaction History ---")
+        for t in transaction_history:
+            print(t)
+        print()
+
+# Main ATM Menu
+while True:
+    print("===== ATM BANKING SYSTEM =====")
+    print("1. Check Balance")
+    print("2. Deposit Money")
+    print("3. Withdraw Money")
+    print("4. Transfer Money")
+    print("5. Transaction History")
+    print("6. Exit")
+
+    choice = input("Enter your choice (1-6): ")
+
+    if choice == "1":
+        check_balance()
+    elif choice == "2":
+        deposit_money()
+    elif choice == "3":
+        withdraw_money()
+    elif choice == "4":
+        transfer_money()
+    elif choice == "5":
+        transaction_history_menu()
+    elif choice == "6":
+        print("Thank you for using ATM Banking System.")
+        break
+    else:
+        print("Invalid choice. Please try again.\n")
