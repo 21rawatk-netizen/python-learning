@@ -2,6 +2,11 @@
 a="kiran rawat"
 print(type(a))
 print(a)
+print(isinstance('Hello world', str)) # True
+print(isinstance('John Doe', int)) # False
+#Escaping Strings: You can use a backslash (\) if your string contains quotes like this:
+msg = 'It\'s a sunny day'
+quote = "She said, \"Hello!\""
 # Acessing strings since strings act as arrays so it has indexing we can acess single chracter from it
 print([1])
 print([6])
@@ -21,6 +26,14 @@ x="python"
 y="code"
 z=x+y
 print(z)
+#in Operator: This returns a boolean that specifies whether the character or characters exist in the string or not:
+my_str = 'Hello world'
+
+print('Hello' in my_str)  # True
+print('hey' in my_str)    # False
+print('hi' in my_str)    # False
+print('e' in my_str)  # True
+print('f' in my_str)
 #some string methods
 print(a.upper())# all character into upper case
 print(a.lower())# all character in lower case
@@ -32,15 +45,23 @@ print(a.split("r"))# coverting string into list based on specid character
 print(a.split())#string into list without argument based in available 
 index = a.find("w")
 print(index)
+# when the find method if no substring occurnece is found it gives output as -1
 print(a.count("r"))
 print(a.capitalize())#capitalize firt character
 print(a.casefold()) # small case first character
 print(a.startswith("s")) # check if the word starts with specified character
 print(a.endswith("t")) 
+#checks if the word ends with specified character
+print(a.isupper())
+#returns true if all the letters in the string are uppercase and false if not
+print(a.islower())
 # formal strings used to combine the numbers and string using the f strings
 age =36
 text=f"My name is kiran and i am {age} years old"
 print(text)
+developer = 'Jessica'
+greeting = f'My name is {developer}.'
+print(greeting) # My name is Jessica.
 # String slicing
 print(a[2:8])
 print(a[3:])
@@ -116,3 +137,6 @@ def is_palindrome(s):
     s=s.replace("","").lower()
     return s==s[::-1]
 print(is_palindrome("A man a plan a canal Panama"))
+
+#isinstance to check the instance of an inpit
+print(isinstance(4,int))
