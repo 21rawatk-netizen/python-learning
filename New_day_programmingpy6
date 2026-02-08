@@ -1,0 +1,180 @@
+"""
+STUDENT MANAGEMENT SYSTEM
+Author: BTech CSE Practice Project
+
+Concepts used:
+- Object-Oriented Programming
+- File Handling (JSON)
+- Exception Handling
+- Searching & Sorting
+- Menu Driven Program
+"""
+
+import json
+import os
+
+
+# -------------------------------
+# Student Class
+# -------------------------------
+class Student:
+    def __init__(self, roll_no, name, branch, marks):
+        self.roll_no = roll_no
+        self.name = name
+        self.branch = branch
+        self.marks = marks
+
+    def calculate_grade(self):
+        if self.marks >= 90:
+            return "A+"
+        elif self.marks >= 80:
+            return "A"
+        elif self.marks >= 70:
+            return "B"
+        elif self.marks >= 60:
+            return "C"
+        else:
+            return "Fail"
+
+    def to_dict(self):
+        return {
+            "roll_no": self.roll_no,
+            "name": self.name,
+            "branch": self.branch,
+            "marks": self.marks
+        }
+
+
+# -------------------------------
+# Student Manager Class
+# -------------------------------
+class StudentManager:
+    def __init__(self, filename="students.json"):
+        self.filename = filename
+        self.students = []
+        self.load_data()
+
+    def load_data(self):
+        if os.path.exists(self.filename):
+            try:
+                with open(self.filename, "r") as file:
+                    data = json.load(file)
+                    for s in data:
+                        self.students.append(
+                            Student(
+                                s["roll_no"],
+                                s["name"],
+                                s["branch"],
+                                s["marks"]
+                            )
+                        )
+            except Exception as e:
+                print("Error loading file:", e)
+
+    def save_data(self):
+        with open(self.filename, "w") as file:
+            json.dump([s.to_dict() for s in self.students], file, indent=4)
+
+    def add_student(self):
+        try:
+            roll_no = int(input("Enter Roll Number: "))
+            name = input("Enter Name: ")
+            branch = input("Enter Branch: ")
+            marks = float(input("Enter Marks: "))
+
+            for s in self.students:
+                if s.roll_no == roll_no:
+                    print("Student with this roll number already exists!")
+                    return
+
+            student = Student(roll_no, name, branch, marks)
+            self.students.append(student)
+            self.save_data()
+            print("Student added successfully!")
+
+        except ValueError:
+            print("Invalid input! Please enter correct data.")
+
+    def display_students(self):
+        if not self.students:
+            print("No students found.")
+            return
+
+        print("\n--- Student Records ---")
+        for s in self.students:
+            print(
+                f"Roll: {s.roll_no}, "
+                f"Name: {s.name}, "
+                f"Branch: {s.branch}, "
+                f"Marks: {s.marks}, "
+                f"Grade: {s.calculate_grade()}"
+            )
+
+    def search_student(self):
+        roll = int(input("Enter Roll Number to search: "))
+        for s in self.students:
+            if s.roll_no == roll:
+                print("Student Found:")
+                print(s.to_dict())
+                return
+        print("Student not found!")
+
+    def delete_student(self):
+        roll = int(input("Enter Roll Number to delete: "))
+        for s in self.students:
+            if s.roll_no == roll:
+                self.students.remove(s)
+                self.save_data()
+                print("Student deleted successfully.")
+                return
+        print("Student not found!")
+
+    def sort_students_by_marks(self):
+        self.students.sort(key=lambda x: x.marks, reverse=True)
+        print("Students sorted by marks (descending).")
+        self.display_students()
+
+
+# -------------------------------
+# Main Menu
+# -------------------------------
+def main():
+    manager = StudentManager()
+
+    while True:
+        print("\n====== Student Management System ======")
+        print("1. Add Student")
+        print("2. Display All Students")
+        print("3. Search Student")
+        print("4. Delete Student")
+        print("5. Sort Students by Marks")
+        print("6. Exit")
+
+        try:
+            choice = int(input("Enter your choice: "))
+
+            if choice == 1:
+                manager.add_student()
+            elif choice == 2:
+                manager.display_students()
+            elif choice == 3:
+                manager.search_student()
+            elif choice == 4:
+                manager.delete_student()
+            elif choice == 5:
+                manager.sort_students_by_marks()
+            elif choice == 6:
+                print("Exiting program...")
+                break
+            else:
+                print("Invalid choice!")
+
+        except ValueError:
+            print("Please enter a number only!")
+
+
+# -------------------------------
+# Program Entry Point
+# -------------------------------
+if __name__ == "__main__":
+    main()
