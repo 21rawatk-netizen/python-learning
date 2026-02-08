@@ -1,0 +1,188 @@
+"""
+LIBRARY MANAGEMENT SYSTEM
+BTech CSE Practice Project
+
+Concepts:
+- Object-Oriented Programming
+- File Handling (JSON)
+- Searching & Sorting
+- Exception Handling
+"""
+
+import json
+import os
+from datetime import datetime
+
+
+# -------------------------------
+# Book Class
+# -------------------------------
+class Book:
+    def __init__(self, book_id, title, author, copies):
+        self.book_id = book_id
+        self.title = title
+        self.author = author
+        self.copies = copies
+
+    def to_dict(self):
+        return {
+            "book_id": self.book_id,
+            "title": self.title,
+            "author": self.author,
+            "copies": self.copies
+        }
+
+
+# -------------------------------
+# Library Class
+# -------------------------------
+class Library:
+    def __init__(self, filename="library.json"):
+        self.filename = filename
+        self.books = []
+        self.load_books()
+
+    def load_books(self):
+        if os.path.exists(self.filename):
+            try:
+                with open(self.filename, "r") as file:
+                    data = json.load(file)
+                    for b in data:
+                        self.books.append(
+                            Book(
+                                b["book_id"],
+                                b["title"],
+                                b["author"],
+                                b["copies"]
+                            )
+                        )
+            except Exception as e:
+                print("Error loading library data:", e)
+
+    def save_books(self):
+        with open(self.filename, "w") as file:
+            json.dump([b.to_dict() for b in self.books], file, indent=4)
+
+    def add_book(self):
+        try:
+            book_id = int(input("Enter Book ID: "))
+            title = input("Enter Book Title: ")
+            author = input("Enter Author Name: ")
+            copies = int(input("Enter Number of Copies: "))
+
+            for book in self.books:
+                if book.book_id == book_id:
+                    print("Book with this ID already exists!")
+                    return
+
+            self.books.append(Book(book_id, title, author, copies))
+            self.save_books()
+            print("Book added successfully!")
+
+        except ValueError:
+            print("Invalid input!")
+
+    def display_books(self):
+        if not self.books:
+            print("No books available.")
+            return
+
+        print("\n--- Library Books ---")
+        for book in self.books:
+            print(
+                f"ID: {book.book_id}, "
+                f"Title: {book.title}, "
+                f"Author: {book.author}, "
+                f"Copies: {book.copies}"
+            )
+
+    def search_book(self):
+        keyword = input("Enter Book ID or Title: ")
+
+        for book in self.books:
+            if str(book.book_id) == keyword or book.title.lower() == keyword.lower():
+                print("Book Found:")
+                print(book.to_dict())
+                return
+
+        print("Book not found!")
+
+    def issue_book(self):
+        book_id = int(input("Enter Book ID to issue: "))
+
+        for book in self.books:
+            if book.book_id == book_id:
+                if book.copies > 0:
+                    book.copies -= 1
+                    self.save_books()
+                    print("Book issued successfully on", datetime.now())
+                else:
+                    print("No copies available!")
+                return
+
+        print("Book not found!")
+
+    def return_book(self):
+        book_id = int(input("Enter Book ID to return: "))
+
+        for book in self.books:
+            if book.book_id == book_id:
+                book.copies += 1
+                self.save_books()
+                print("Book returned successfully!")
+                return
+
+        print("Book not found!")
+
+    def sort_books_by_title(self):
+        self.books.sort(key=lambda b: b.title.lower())
+        print("Books sorted by title.")
+        self.display_books()
+
+
+# -------------------------------
+# Main Menu
+# -------------------------------
+def main():
+    library = Library()
+
+    while True:
+        print("\n====== Library Management System ======")
+        print("1. Add Book")
+        print("2. Display Books")
+        print("3. Search Book")
+        print("4. Issue Book")
+        print("5. Return Book")
+        print("6. Sort Books by Title")
+        print("7. Exit")
+
+        try:
+            choice = int(input("Enter choice: "))
+
+            if choice == 1:
+                library.add_book()
+            elif choice == 2:
+                library.display_books()
+            elif choice == 3:
+                library.search_book()
+            elif choice == 4:
+                library.issue_book()
+            elif choice == 5:
+                library.return_book()
+            elif choice == 6:
+                library.sort_books_by_title()
+            elif choice == 7:
+                print("Exiting Library System...")
+                break
+            else:
+                print("Invalid choice!")
+
+        except ValueError:
+            print("Please enter a valid number!")
+
+
+# -------------------------------
+# Program Start
+# -------------------------------
+if __name__ == "__main__":
+    main()
