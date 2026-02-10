@@ -1,0 +1,41 @@
+# ------------------------------------------------------------
+# Problem Statement:
+# Given an array of integers nums and an integer target,
+# return the indices of the two numbers such that they add up
+# to the target.
+#
+# You may assume that each input has exactly one solution,
+# and you may not use the same element twice.
+#
+# Example:
+# nums = [2, 7, 11, 15], target = 9
+# Output: [0, 1]
+#
+# Constraints:
+# - 2 <= len(nums) <= 10^5
+# - -10^9 <= nums[i] <= 10^9
+# - -10^9 <= target <= 10^9
+#
+# Time Complexity Requirement: O(n)
+# ------------------------------------------------------------
+
+def two_sum(nums, target):
+    index_map = {}  # Stores number -> index
+
+    for i in range(len(nums)):
+        complement = target - nums[i]
+
+        if complement in index_map:
+            return [index_map[complement], i]
+
+        index_map[nums[i]] = i
+
+    return []
+
+
+# Example usage
+nums = [2, 7, 11, 15]
+target = 9
+
+result = two_sum(nums, target)
+print(result)
