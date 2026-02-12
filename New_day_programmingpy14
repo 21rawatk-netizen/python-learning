@@ -1,0 +1,117 @@
+"""
+Project: Command Line Expense Tracker
+
+Features:
+1. Add expense (amount, category, description)
+2. View all expenses
+3. View total expenses
+4. Filter expenses by category
+5. Data stored in a JSON file (persistent storage)
+
+Author: Your Name
+"""
+
+import json
+import os
+from datetime import datetime
+
+FILE_NAME = "expenses.json"
+
+
+# Load existing expenses
+def load_expenses():
+    if os.path.exists(FILE_NAME):
+        with open(FILE_NAME, "r") as file:
+            return json.load(file)
+    return []
+
+
+# Save expenses to file
+def save_expenses(expenses):
+    with open(FILE_NAME, "w") as file:
+        json.dump(expenses, file, indent=4)
+
+
+# Add new expense
+def add_expense(expenses):
+    try:
+        amount = float(input("Enter amount: ₹"))
+        category = input("Enter category (Food, Travel, etc.): ")
+        description = input("Enter description: ")
+        
+        expense = {
+            "amount": amount,
+            "category": category,
+            "description": description,
+            "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
+        
+        expenses.append(expense)
+        save_expenses(expenses)
+        print("✅ Expense added successfully!\n")
+    except ValueError:
+        print("❌ Invalid amount entered.\n")
+
+
+# View all expenses
+def view_expenses(expenses):
+    if not expenses:
+        print("No expenses found.\n")
+        return
+
+    for i, expense in enumerate(expenses, start=1):
+        print(f"{i}. ₹{expense['amount']} | {expense['category']} | {expense['description']} | {expense['date']}")
+    print()
+
+
+# View total expenses
+def view_total(expenses):
+    total = sum(expense["amount"] for expense in expenses)
+    print(f"💰 Total Expenses: ₹{total}\n")
+
+
+# Filter by category
+def filter_by_category(expenses):
+    category = input("Enter category to filter: ")
+    filtered = [e for e in expenses if e["category"].lower() == category.lower()]
+    
+    if not filtered:
+        print("No expenses found in this category.\n")
+        return
+
+    for expense in filtered:
+        print(f"₹{expense['amount']} | {expense['description']} | {expense['date']}")
+    print()
+
+
+# Main menu
+def main():
+    expenses = load_expenses()
+
+    while True:
+        print("===== Expense Tracker =====")
+        print("1. Add Expense")
+        print("2. View All Expenses")
+        print("3. View Total Spending")
+        print("4. Filter by Category")
+        print("5. Exit")
+
+        choice = input("Choose an option (1-5): ")
+
+        if choice == "1":
+            add_expense(expenses)
+        elif choice == "2":
+            view_expenses(expenses)
+        elif choice == "3":
+            view_total(expenses)
+        elif choice == "4":
+            filter_by_category(expenses)
+        elif choice == "5":
+            print("Goodbye 👋")
+            break
+        else:
+            print("Invalid choice. Try again.\n")
+
+
+if __name__ == "__main__":
+    main()
