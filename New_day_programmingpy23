@@ -1,0 +1,27 @@
+"""
+LeetCode Problem: Two Sum
+
+Given an array of integers nums and an integer target,
+return indices of the two numbers such that they add up to target.
+
+Time Complexity: O(n)
+Space Complexity: O(n)
+"""
+
+def twoSum(nums, target):
+    num_map = {}  # Dictionary to store number and its index
+    
+    for i, num in enumerate(nums):
+        complement = target - num
+        
+        # Check if complement exists in dictionary
+        if complement in num_map:
+            return [num_map[complement], i]
+        
+        # Store current number with index
+        num_map[num] = i
+
+# Example usage
+nums = [2, 7, 11, 15]
+target = 9
+print(twoSum(nums, target))
