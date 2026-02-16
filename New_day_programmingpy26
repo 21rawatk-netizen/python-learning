@@ -1,0 +1,33 @@
+"""
+LeetCode 238 - Product of Array Except Self
+Time Complexity: O(n)
+Space Complexity: O(1) (excluding output array)
+"""
+
+class Solution:
+    def productExceptSelf(self, nums):
+        n = len(nums)
+        answer = [1] * n
+
+        # Left product
+        left_product = 1
+        for i in range(n):
+            answer[i] = left_product
+            left_product *= nums[i]
+
+        # Right product
+        right_product = 1
+        for i in range(n - 1, -1, -1):
+            answer[i] *= right_product
+            right_product *= nums[i]
+
+        return answer
+
+
+# Example usage
+nums = list(map(int, input("Enter array elements: ").split()))
+
+obj = Solution()
+result = obj.productExceptSelf(nums)
+
+print("Output:", result)
