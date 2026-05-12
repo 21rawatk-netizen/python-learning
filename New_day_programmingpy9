@@ -126,3 +126,5 @@ class LRUCache:
             if len(self.cache) > self.capacity:
                 lru_node = self._remove_lru()
                 del self.cache[lru_node.key]
+
+
